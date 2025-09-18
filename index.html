@@ -4,15 +4,257 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PH31 Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ====== Reset & Global Styles ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8fbff, #eef2f7);
+      color: #2c3e50;
+      transition: background 0.3s ease;
+    }
+    h1, h2 {
+      font-weight: 600;
+    }
+
+    /* ====== Navbar ====== */
+    nav {
+      background: linear-gradient(90deg, #3498db, #2980b9);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav h1 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 500;
+    }
+    .nav-links span {
+      cursor: pointer;
+      transition: color 0.3s, transform 0.2s;
+    }
+    .nav-links span:hover {
+      color: #f1c40f;
+      transform: translateY(-2px);
+    }
+    #logoutBtn {
+      background: linear-gradient(90deg, #e74c3c, #c0392b);
+      border: none;
+      color: white;
+      padding: 0.6rem 1.4rem;
+      cursor: pointer;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: background 0.3s, transform 0.2s;
+    }
+    #logoutBtn:hover {
+      background: linear-gradient(90deg, #ff6b5a, #e74c3c);
+      transform: scale(1.05);
+    }
+
+    /* ====== Containers ====== */
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      animation: fadeIn 0.6s ease;
+    }
+
+    /* ====== Grid Layout ====== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    /* ====== Subject Cards ====== */
+    .card {
+      background: white;
+      padding: 1.8rem 1.2rem;
+      border-radius: 20px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: #34495e;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      background: linear-gradient(135deg, #fefefe, #f4f8fc);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    /* ====== File Links as Cards ====== */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .link-card {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: #2c3e50;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+    .link-card:hover {
+      transform: translateY(-6px);
+      background: linear-gradient(135deg, #f4f8fc, #e8f2fa);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    .link-card .file-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .link-card .file-icon {
+      width: 40px;
+      height: 40px;
+      background: #3498db;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    .link-card .file-name {
+      font-size: 1rem;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 150px;
+    }
+    .link-card .open-icon {
+      font-size: 1.2rem;
+      color: #3498db;
+      transition: transform 0.2s ease;
+    }
+    .link-card:hover .open-icon {
+      transform: translateX(5px);
+    }
+
+    /* ====== Back Button ====== */
+    .back-btn {
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #f39c12, #e67e22);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .back-btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #e67e22, #d35400);
+    }
+
+    /* ====== Animations ====== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 768px) {
+      nav h1 {
+        font-size: 1.4rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+      .container {
+        padding: 1rem;
+      }
+      .card {
+        font-size: 1rem;
+        padding: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ====== Navbar ====== -->
+  <nav>
+    <h1>PH31 Portal</h1>
+    <div class="nav-links">
+      <span onclick="openSection('records')">Records</span>
+      <span onclick="openSection('pdfs')">PDFs</span>
+      <span onclick="openSection('videos')">Videos</span>
+    </div>
+    <button id="logoutBtn" onclick="logout()">Logout</button>
+  </nav>
+
+  <!-- ====== Subjects Section ====== -->
+  <div id="subjects-section" class="container">
+    <h2 id="section-title"></h2>
+    <div class="grid" id="subjects-grid"></div>
+  </div>
+
+  <!-- ====== Content Section ====== -->
+  <div id="content-section" class="container" style="display:none;">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <h2 id="content-title"></h2>
+    <div id="content-body" class="links-grid"></div>
+  </div>
+
+  <!-- ====== Firebase Scripts ====== -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <script>
+    // ====== Firebase Config ======
+    var firebaseConfig = {
+      apiKey: "AIzaSyBLqSDPJuAz14fRXayuWtXwA6IS1OZaE_4",
+      authDomain: "as-game-c18d8.firebaseapp.com",
+      projectId: "as-game-c18d8",
+      storageBucket: "as-game-c18d8.appspot.com",
+      messagingSenderId: "95306988046",
+      appId: "1:95306988046:web:3b5399b25ec12c47ff9a5f",
+      measurementId: "G-DNQ1E0WYSY"
     };
     firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore();
     var auth = firebase.auth();
 
-    // Subjects
+    // ====== Subjects ======
     const subjects = [
       "Basic Pharmaceutical Organic Chemistry",
       "Pharmaceutical Analytical Chemistry I",
@@ -24,17 +266,17 @@
       "Cell Biology"
     ];
 
-    // Default load
+    // ====== Default Load ======
     window.onload = function() {
       openSection('records');
     };
 
-    // Logout
+    // ====== Logout ======
     function logout() {
       auth.signOut().then(() => alert("You have been logged out!"));
     }
 
-    // Open Section
+    // ====== Open Section ======
     function openSection(type) {
       document.getElementById("subjects-section").style.display = "block";
       document.getElementById("content-section").style.display = "none";
@@ -51,7 +293,7 @@
       });
     }
 
-    // Open Content
+    // ====== Open Content ======
     function openContent(subject, type) {
       document.getElementById("subjects-section").style.display = "none";
       document.getElementById("content-section").style.display = "block";
@@ -70,12 +312,37 @@
             body.innerHTML = "";
             snapshot.forEach(doc => {
               const data = doc.data();
-              const a = document.createElement("a");
-              a.href = data.url; // ✅ تم التعديل من link إلى url
-              a.target = "_blank";
-              a.className = "pdf-link";
-              a.textContent = data.name || "Open File";
-              body.appendChild(a);
+
+              // Create a styled card for each link
+              const linkCard = document.createElement("a");
+              linkCard.href = data.url;
+              linkCard.target = "_blank";
+              linkCard.rel = "noopener noreferrer";
+              linkCard.className = "link-card";
+
+              // File icon
+              const fileInfo = document.createElement("div");
+              fileInfo.className = "file-info";
+
+              const fileIcon = document.createElement("div");
+              fileIcon.className = "file-icon";
+              fileIcon.textContent = "📄";
+
+              const fileName = document.createElement("div");
+              fileName.className = "file-name";
+              fileName.textContent = data.name || "Open File";
+
+              fileInfo.appendChild(fileIcon);
+              fileInfo.appendChild(fileName);
+
+              const openIcon = document.createElement("div");
+              openIcon.className = "open-icon";
+              openIcon.textContent = "➜";
+
+              linkCard.appendChild(fileInfo);
+              linkCard.appendChild(openIcon);
+
+              body.appendChild(linkCard);
             });
           }
         })
@@ -84,7 +351,7 @@
         });
     }
 
-    // Back Button
+    // ====== Back Button ======
     function goBack() {
       document.getElementById("content-section").style.display = "none";
       document.getElementById("subjects-section").style.display = "block";
