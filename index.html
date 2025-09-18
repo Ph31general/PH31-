@@ -92,13 +92,13 @@
     <button id="logoutBtn" onclick="logout()">Logout</button>
   </nav>
 
-  <!-- Subjects -->
+  <!-- Subjects Section -->
   <div id="subjects-section" class="container">
     <h2 id="section-title"></h2>
     <div class="grid" id="subjects-grid"></div>
   </div>
 
-  <!-- Content -->
+  <!-- Content Section -->
   <div id="content-section" class="container" style="display:none;">
     <button class="back-btn" onclick="goBack()">← Back</button>
     <h2 id="content-title"></h2>
@@ -116,7 +116,7 @@
       apiKey: "AIzaSyBLqSDPJuAz14fRXayuWtXwA6IS1OZaE_4",
       authDomain: "as-game-c18d8.firebaseapp.com",
       projectId: "as-game-c18d8",
-      storageBucket: "as-game-c18d8.firebasestorage.app",
+      storageBucket: "as-game-c18d8.appspot.com", // ✅ تم تعديل الـ storageBucket
       messagingSenderId: "95306988046",
       appId: "1:95306988046:web:3b5399b25ec12c47ff9a5f",
       measurementId: "G-DNQ1E0WYSY"
@@ -184,7 +184,7 @@
             snapshot.forEach(doc => {
               const data = doc.data();
               const a = document.createElement("a");
-              a.href = data.link; // خلي الفيلد عندك اسمه "link"
+              a.href = data.url; // ✅ تم التعديل من link إلى url
               a.target = "_blank";
               a.className = "pdf-link";
               a.textContent = data.name || "Open File";
@@ -197,7 +197,7 @@
         });
     }
 
-    // Back
+    // Back Button
     function goBack() {
       document.getElementById("content-section").style.display = "none";
       document.getElementById("subjects-section").style.display = "block";
