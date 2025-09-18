@@ -315,17 +315,18 @@
             snapshot.forEach(doc => {
               const data = doc.data();
 
-              // ====== تعديل التحميل التلقائي ======
+              // Create a styled card for each link
               const linkCard = document.createElement("div");
               linkCard.className = "link-card";
+
               linkCard.onclick = (e) => {
                 e.preventDefault();
-                const downloadLink = document.createElement("a");
-                downloadLink.href = data.url;
-                downloadLink.setAttribute("download", data.name || "file");
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
+                const tempLink = document.createElement("a");
+                tempLink.href = data.url;
+                tempLink.setAttribute("download", data.name || "file");
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                document.body.removeChild(tempLink);
               };
 
               const fileInfo = document.createElement("div");
@@ -344,7 +345,7 @@
 
               const openIcon = document.createElement("div");
               openIcon.className = "open-icon";
-              openIcon.textContent = "➜";
+              openIcon.textContent = "⬇";
 
               linkCard.appendChild(fileInfo);
               linkCard.appendChild(openIcon);
