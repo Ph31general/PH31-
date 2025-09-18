@@ -302,8 +302,10 @@
       const body = document.getElementById("content-body");
       body.innerHTML = "<p>Loading...</p>";
 
+      // ====== تعديل الجزء الخاص بجلب البيانات ======
       db.collection(type)
-        .where("subject", "==", subject)
+        .doc(subject) // يدخل على الـ Document الخاص بالمادة
+        .collection("files") // يدخل على Subcollection اسمه files
         .get()
         .then(snapshot => {
           if (snapshot.empty) {
